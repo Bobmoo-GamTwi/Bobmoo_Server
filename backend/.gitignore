@@ -1,0 +1,56 @@
+#  보안 및 환경 설정
+.env
+.env.local
+application-secret.yml
+application-secret.properties
+src/main/resources/application.properties
+secrets.json
+*.key
+*.pem
+
+# Java & Spring Boot (BackEnd)
+target/
+build/
+out/
+bin/
+*.class
+
+# 로그 파일
+*.log
+logs/
+
+# Gradle
+.gradle/
+gradle-app.setting
+!gradle-wrapper.jar
+
+# IntelliJ / VS Code
+.classpath
+.project
+.settings/
+.idea/
+*.iml
+.vscode/
+*.ipr
+*.iws
+
+# Python (Crawler)
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environments
+venv/
+env/
+.venv/
+ENV/
+
+# 배포 및 빌드 관련
+dist/
+*.egg-info/
+.eggs/
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
