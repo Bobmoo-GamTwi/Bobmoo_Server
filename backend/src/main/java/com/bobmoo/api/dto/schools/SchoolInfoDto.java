@@ -8,5 +8,6 @@ import lombok.Getter;
 public class SchoolInfoDto {
     private int schoolId;
     private String schoolName;
+    private String schoolNameK;
     private String schoolColor;
 }

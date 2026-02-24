@@ -12,12 +12,12 @@ import java.time.LocalDate;
 
 @RestController
 @RequestMapping("/api/v1/menu")
-public class BmController {
+public class MealController {
 
     // 1. MealService를 주입받습니다.
     private final MealService mealService;
 
-    public BmController(MealService mealService) {
+    public MealController(MealService mealService) {
         this.mealService = mealService;
     }
 
