@@ -1,10 +1,13 @@
 package com.bobmoo.api.domain;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+
 
 @Entity
 @Getter
@@ -20,6 +23,7 @@ public class Meal {
 
     @Column(nullable = false)
     private String school;
+
 
     @Column(nullable = false)
     private String cafeteriaName;

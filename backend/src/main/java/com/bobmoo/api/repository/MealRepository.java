@@ -7,5 +7,5 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface MealRepository extends JpaRepository<Meal,Long> {
-    public List<Meal> findByDate(LocalDate date);
+    public List<Meal> findByDateAndSchool(LocalDate date, String schoolName);
 }

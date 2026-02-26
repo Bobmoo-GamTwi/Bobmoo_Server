@@ -7,5 +7,5 @@ import java.util.Collection;
 import java.util.List;
 
 public interface CafeteriaRepository extends JpaRepository<Cafeteria,Long> {
-    List<Cafeteria> findByNameIn(Collection<String> names);
+    List<Cafeteria> findBySchoolAndNameIn(String school, Collection<String> names);
 }
