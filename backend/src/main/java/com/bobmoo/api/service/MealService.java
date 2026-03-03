@@ -2,10 +2,7 @@ package com.bobmoo.api.service;
 
 import com.bobmoo.api.domain.Cafeteria;
 import com.bobmoo.api.domain.Meal;
-import com.bobmoo.api.dto.CafeteriaDto;
-import com.bobmoo.api.dto.MenuDto;
-import com.bobmoo.api.dto.MenuResponse;
-import com.bobmoo.api.dto.OperatingHoursDto;
+import com.bobmoo.api.dto.menu.*;
 import com.bobmoo.api.repository.CafeteriaRepository;
 import com.bobmoo.api.repository.MealRepository;
 import org.springframework.stereotype.Service;
@@ -27,18 +24,15 @@ public class MealService {
         this.cafeteriaRepository = cafeteriaRepository;
     }
 
-    public MenuResponse findMealsByDate(LocalDate date){
+    public MenuResponse findMealsByDate(LocalDate date, String schoolName){
         // 1. DB에서 해당 날짜의 모든 Meal 엔티티를 가져옵니다.
-        List<Meal> mealsFromDb = mealRepository.findByDate(date);
+        List<Meal> mealsFromDb = mealRepository.findByDateAndSchool(date,  schoolName);
 
         // 만약 그날 메뉴가 하나도 없다면, 빈 응답을 보냅니다.
         if (mealsFromDb.isEmpty()) {
-            // TODO: 학교 이름도 동적으로 처리할 필요가 있음 (예: 파라미터로 받기)
-            return new MenuResponse(date, "학교 정보 없음", new ArrayList<>());
+            SchoolsDto schoolsDto = new SchoolsDto("학교 정보 없음", new ArrayList<>());
+            return new MenuResponse(date, schoolsDto);
         }
-
-        // 2. 첫 번째 메뉴에서 학교 이름을 가져옵니다.
-        String schoolName = mealsFromDb.get(0).getSchool();
 
         // 3. 가져온 Meal 리스트를 식당 이름(cafeteriaName)으로 그룹핑합니다.
         Map<String, List<Meal>> mealsByCafeteriaName = mealsFromDb.stream()
@@ -47,7 +41,7 @@ public class MealService {
         List<String> cafeteriaNames = new ArrayList<>(mealsByCafeteriaName.keySet());
 
         // Step B: 한 번의 쿼리로 모든 식당 정보를 가져옵니다 (N+1 문제 방지).
-        List<Cafeteria> cafeteriaEntities = cafeteriaRepository.findByNameIn(cafeteriaNames);
+        List<Cafeteria> cafeteriaEntities = cafeteriaRepository.findBySchoolAndNameIn(schoolName, cafeteriaNames);
 
         // Step C: 이름으로 쉽게 찾을 수 있도록 Map으로 변환합니다.
         Map<String, Cafeteria> cafeteriaMap = cafeteriaEntities.stream()
@@ -85,8 +79,9 @@ public class MealService {
                 })
                 .collect(Collectors.toList());
 
-        // 5. 최종 DailyMenuResponse DTO를 조립할 때, 하드코딩 대신 변수를 사용합니다.
-        return new MenuResponse(date, schoolName, cafeteriaDtos);
+        //5.
+        SchoolsDto schoolsDto = new SchoolsDto(schoolName, cafeteriaDtos);
+        return new MenuResponse(date, schoolsDto);
         }
     }
 

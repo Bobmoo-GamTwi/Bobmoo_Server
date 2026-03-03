@@ -1,4 +1,4 @@
-package com.bobmoo.api.dto;
+package com.bobmoo.api.dto.menu;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
