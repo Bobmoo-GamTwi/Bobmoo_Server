@@ -1,0 +1,7 @@
+requests
+beautifulsoup4
+pymysql
+python-dotenv
+pdf2image
+Pillow
+google-genai
